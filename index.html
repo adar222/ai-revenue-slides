@@ -1,1 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Revenue Optimizer Presentation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --bg-black: #000000;
+            --accent-green: #00FF85;
+            --accent-red: #FF3B30; /* For the counter */
+            --text-light: #FFFFFF;
+            --text-secondary: #C2C2DA;
+            --card-bg: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-light);
+            overflow: hidden; /* Prevents scrollbars */
+            height: 100vh;
+        }
+
+        /* Slide Structure */
+        .slide {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+        }
+
+        .slide.active {
+            transform: translateX(0);
+            opacity: 1;
+            z-index: 1;
+        }
+        
+        .slide.exit {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+
+        /* Logo */
+        .logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-light);
+            z-index: 10;
+        }
+        .logo span {
+            color: var(--accent-green);
+        }
+
+        /* Navigation Arrows */
+        .nav-arrow {
+            position: absolute;
+            bottom: 40px;
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            animation: bounce 2s infinite ease-in-out;
+        }
+        .nav-arrow:hover {
+            background-color: rgba(0, 255, 133, 0.1);
+            box-shadow: 0 0 15px var(--accent-green), 0 0 25px var(--accent-green);
+            animation-play-state: paused;
+        }
+        .nav-arrow svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent-green);
+        }
+        .prev {
+            left: 40px;
+            display: none; /* Hidden by default */
+        }
+        .next {
+            right: 40px;
+            display: none; /* Hidden until there's more than one slide */
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+
+        /* General Slide Titles */
+        .slide-title {
+             font-size: clamp(2rem, 5vw, 3.5rem);
+             color: var(--accent-green);
+             margin-bottom: 1rem;
+        }
+        .slide-subtitle {
+            color: var(--text-secondary); 
+            font-weight: 400;
+            margin-bottom: 3rem;
+        }
+
+
+        /* Slide 1 Specifics */
+        #slide1 h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        #slide1 h2 {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+        #slide1 p {
+            font-size: 1.2rem;
+            color: var(--accent-green);
+        }
+        
+        /* Slide 2 Specifics */
+        #slide2 p {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            max-width: 700px;
+            color: var(--text-secondary);
+        }
+        .counter-container {
+            margin-top: 2rem;
+        }
+        .loss-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .loss-counter {
+            font-size: clamp(5rem, 15vw, 9rem);
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
+        /* Slide 3 Specifics - Interactive Cards */
+        #slide3 .demo-link {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        #slide3 .demo-link:hover {
+            color: var(--accent-green);
+        }
+        #slide3 .demo-link svg {
+            width: clamp(1.5rem, 4vw, 2.5rem);
+            height: clamp(1.5rem, 4vw, 2.5rem);
+            fill: currentColor;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 800px;
+        }
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #333;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(0, 255, 133, 0.5);
+        }
+        .feature-card svg {
+            width: 50px;
+            height: 50px;
+            fill: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+        .feature-card h4 {
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+
+        /* Slide 4 Specifics - Vertical Stepper */
+        .stepper-wrapper {
+            position: relative;
+            padding-left: 60px; /* Space for the line and nodes */
+            max-width: 700px;
+        }
+        .stepper-line {
+            position: absolute;
+            left: 24px; /* Center of the node */
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--text-secondary);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 1.2s ease-out;
+        }
+        .active .stepper-line {
+            transform: scaleY(1);
+        }
+        .stepper-item {
+            position: relative;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+        .stepper-item:last-child {
+            margin-bottom: 0;
+        }
+        .stepper-node {
+            position: absolute;
+            left: -37px;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--accent-green);
+            border-radius: 50%;
+            background-color: var(--bg-black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--accent-green);
+            transform: scale(0);
+            transition: transform 0.5s ease-out;
+        }
+        .active .stepper-item .stepper-node {
+            transform: scale(1);
+        }
+        .stepper-content {
+            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+            padding-top: 10px;
+        }
+
+        /* Slide 5 Specifics */
+        #slide5 .impact-text {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+        }
+        #slide5 .impact-text .highlight {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        /* Slide 6 Specifics */
+        #slide6 .reality-grid {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            justify-content: center;
+        }
+        #slide6 .reality-card {
+            background-color: var(--card-bg);
+            border: 1px solid #333;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 350px;
+        }
+        #slide6 .reality-card h4 {
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Slide 7 Specifics */
+        #slide7 h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            animation: pulse 2.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+
+        /* Animation for slide content */
+        .animated-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .active .animated-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .active .animated-item:nth-child(2) { transition-delay: 0.2s; }
+        .active .animated-item:nth-child(3) { transition-delay: 0.4s; }
+        .active .animated-item:nth-child(4) { transition-delay: 0.6s; }
+        .active .animated-item:nth-child(5) { transition-delay: 0.8s; }
+        .active .animated-item:nth-child(6) { transition-delay: 1.0s; }
+        
+        /* Staggered animation for stepper */
+        .active .stepper-item:nth-of-type(1) .stepper-node { transition-delay: 0.2s; }
+        .active .stepper-item:nth-of-type(1) .stepper-content { transition-delay: 0.4s; }
+        .active .stepper-item:nth-of-type(2) .stepper-node { transition-delay: 0.6s; }
+        .active .stepper-item:nth-of-type(2) .stepper-content { transition-delay: 0.8s; }
+        .active .stepper-item:nth-of-type(3) .stepper-node { transition-delay: 1.0s; }
+        .active .stepper-item:nth-of-type(3) .stepper-content { transition-delay: 1.2s; }
+        .active .stepper-item:nth-of-type(4) .stepper-node { transition-delay: 1.4s; }
+        .active .stepper-item:nth-of-type(4) .stepper-content { transition-delay: 1.6s; }
+
+    </style>
+</head>
+<body>
+
+    <div class="logo">st<span>a</span>rt.io</div>
+
+    <!-- Slides Container -->
+    <main id="presentation-container">
+
+        <!-- SLIDE 1 -->
+        <section class="slide active" id="slide1">
+            <h1 class="animated-item">AI Revenue Optimizer</h1>
+            <h2 class="animated-item">Unlock Hidden Revenue. Work Smarter.</h2>
+            <p class="animated-item">By: Adar, Freek, Milosz</p>
+        </section>
+
+        <!-- SLIDE 2 -->
+        <section class="slide" id="slide2">
+            <h3 class="slide-subtitle animated-item">The Problem — Lost Revenue</h3>
+            <h1 class="slide-title animated-item">Are We Losing Revenue?</h1>
+            <p class="animated-item">Manual checks, hidden discrepancies, and slow detection lead to 15–25% lost profit every month.</p>
+            <div class="counter-container animated-item">
+                <div class="loss-label">POTENTIAL HIDDEN LOSS</div>
+                <div class="loss-counter" id="loss-counter">0-10%</div>
+            </div>
+        </section>
+        
+        <!-- SLIDE 3 -->
+        <section class="slide" id="slide3">
+            <h3 class="slide-subtitle animated-item">Meet the Tool</h3>
+            <a href="https://ai-revenue-dashboard-dueiguwapplgdfbruh7t4sw.streamlit.app/" target="_blank" class="demo-link animated-item">
+                Meet the AI Revenue Optimizer
+                <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            </a>
+            <div class="features-grid">
+                <div class="feature-card animated-item" style="transition-delay: 0.4s;">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                    <h4>AI-driven insights & alerts</h4>
+                </div>
+                <div class="feature-card animated-item" style="transition-delay: 0.6s;">
+                    <svg viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm-7 4c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7zm7-5c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/></svg>
+                    <h4>Real-time revenue monitoring</h4>
+                </div>
+                <div class="feature-card animated-item" style="transition-delay: 0.8s;">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <h4>Actionable recommendations</h4>
+                </div>
+                <div class="feature-card animated-item" style="transition-delay: 1.0s;">
+                    <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+                    <h4>One-click fixes</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4 -->
+        <section class="slide" id="slide4">
+            <h1 class="slide-title animated-item">How It Works</h1>
+            <div class="stepper-wrapper animated-item">
+                <div class="stepper-line"></div>
+                <div class="stepper-item">
+                    <div class="stepper-node">1</div>
+                    <div class="stepper-content animated-item">Connects to your data sources</div>
+                </div>
+                <div class="stepper-item">
+                    <div class="stepper-node">2</div>
+                    <div class="stepper-content animated-item">Uses AI to surface key issues and opportunities</div>
+                </div>
+                <div class="stepper-item">
+                    <div class="stepper-node">3</div>
+                    <div class="stepper-content animated-item">Sends alerts and actionable steps</div>
+                </div>
+                <div class="stepper-item">
+                    <div class="stepper-node">4</div>
+                    <div class="stepper-content animated-item">Lets you fix or download reports with one click</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5 -->
+        <section class="slide" id="slide5">
+            <h1 class="slide-title animated-item">What’s the Impact?</h1>
+            <p class="impact-text animated-item">Just by reducing inefficiencies, we can increase profit by <span class="highlight" id="impact-counter">15–25%</span>.</p>
+        </section>
+
+        <!-- SLIDE 6 -->
+        <section class="slide" id="slide6">
+             <h1 class="slide-title animated-item">From Demo to Reality</h1>
+             <div class="reality-grid">
+                 <div class="reality-card animated-item" style="transition-delay: 0.4s;">
+                     <h4>This is a working demo.</h4>
+                     <p>Ready to explore and validate the core functionality today.</p>
+                 </div>
+                 <div class="reality-card animated-item" style="transition-delay: 0.6s;">
+                     <h4>1 month of engineering...</h4>
+                     <p>...is all it takes to launch this tool company-wide.</p>
+                 </div>
+             </div>
+        </section>
+
+        <!-- SLIDE 7 -->
+        <section class="slide" id="slide7">
+            <h1 class="slide-title animated-item">Vote for AI Revenue Optimizer</h1>
+            <h2 class="slide-subtitle animated-item">Let’s build it together and boost our revenue!</h2>
+        </section>
+
+    </main>
+
+    <!-- Navigation -->
+    <div class="nav-arrow prev" id="prev-arrow">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </div>
+    <div class="nav-arrow next" id="next-arrow">
+        <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextArrow = document.getElementById('next-arrow');
+            const prevArrow = document.getElementById('prev-arrow');
+            let currentSlide = 0;
+
+            function updateArrows() {
+                if (currentSlide > 0) {
+                    prevArrow.style.display = 'flex';
+                } else {
+                    prevArrow.style.display = 'none';
+                }
+
+                if (currentSlide < slides.length - 1) {
+                    nextArrow.style.display = 'flex';
+                } else {
+                    nextArrow.style.display = 'none';
+                }
+            }
+            
+            function animateCounter(el, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const currentNumber = Math.floor(progress * (end - start) + start);
+                    el.innerHTML = `${currentNumber}-${currentNumber + 10}%`;
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            function goToSlide(slideIndex) {
+                if (slideIndex < 0 || slideIndex >= slides.length) {
+                    return;
+                }
+                
+                const current = slides[currentSlide];
+                const next = slides[slideIndex];
+
+                if (slideIndex > currentSlide) {
+                    current.classList.add('exit');
+                    current.classList.remove('active');
+                    next.classList.remove('exit');
+                    next.classList.add('active');
+                } else {
+                    current.classList.remove('active');
+                    current.classList.remove('exit'); 
+                    next.classList.remove('exit');
+                    next.style.transform = 'translateX(-100%)';
+                    
+                    setTimeout(() => {
+                        next.classList.add('active');
+                        next.style.transform = 'translateX(0)';
+                    }, 50);
+                }
+                
+                currentSlide = slideIndex;
+                updateArrows();
+
+                // Trigger animations on specific slides
+                if (next.id === 'slide2' && !next.dataset.animated) {
+                    const counterEl = document.getElementById('loss-counter');
+                    animateCounter(counterEl, 0, 15, 1200);
+                    next.dataset.animated = 'true';
+                }
+                if (next.id === 'slide5' && !next.dataset.animated) {
+                    const counterEl = document.getElementById('impact-counter');
+                    animateCounter(counterEl, 0, 15, 1200);
+                    next.dataset.animated = 'true';
+                }
+            }
+
+            nextArrow.addEventListener('click', () => {
+                goToSlide(currentSlide + 1);
+            });
+
+            prevArrow.addEventListener('click', () => {
+                goToSlide(currentSlide - 1);
+            });
+
+            // Key navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    goToSlide(currentSlide + 1);
+                } else if (e.key === 'ArrowLeft') {
+                    goToSlide(currentSlide - 1);
+                }
+            });
+
+            // Initialize
+            updateArrows();
+        });
+    </script>
+</body>
+</html>
 
