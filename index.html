@@ -10,23 +10,19 @@
         :root {
             --bg-black: #000000;
             --accent-green: #00FF85;
-            --accent-red: #FF3B30; /* For the counter */
+            --accent-red: #FF3B30;
             --text-light: #FFFFFF;
             --text-secondary: #C2C2DA;
             --card-bg: #1a1a1a;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-black);
             color: var(--text-light);
-            overflow: hidden; /* Prevents scrollbars */
+            overflow: hidden;
             height: 100vh;
         }
 
@@ -39,7 +35,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 40px;
+            padding: 40px 80px;
             position: absolute;
             top: 0;
             left: 0;
@@ -47,18 +43,8 @@
             opacity: 0;
             transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
         }
-
-        .slide.active {
-            transform: translateX(0);
-            opacity: 1;
-            z-index: 1;
-        }
-        
-        .slide.exit {
-            transform: translateX(-100%);
-            opacity: 0;
-        }
-
+        .slide.active { transform: translateX(0); opacity: 1; z-index: 1; }
+        .slide.exit { transform: translateX(-100%); opacity: 0; }
 
         /* Logo */
         .logo {
@@ -70,9 +56,7 @@
             color: var(--text-light);
             z-index: 10;
         }
-        .logo span {
-            color: var(--accent-green);
-        }
+        .logo span { color: var(--accent-green); }
 
         /* Navigation Arrows */
         .nav-arrow {
@@ -87,7 +71,7 @@
             align-items: center;
             cursor: pointer;
             z-index: 10;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
             animation: bounce 2s infinite ease-in-out;
         }
         .nav-arrow:hover {
@@ -95,84 +79,38 @@
             box-shadow: 0 0 15px var(--accent-green), 0 0 25px var(--accent-green);
             animation-play-state: paused;
         }
-        .nav-arrow svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--accent-green);
-        }
-        .prev {
-            left: 40px;
-            display: none; /* Hidden by default */
-        }
-        .next {
-            right: 40px;
-            display: none; /* Hidden until there's more than one slide */
-        }
+        .nav-arrow svg { width: 20px; height: 20px; fill: var(--accent-green); }
+        .prev { left: 40px; display: none; }
+        .next { right: 40px; display: none; }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
 
-
-        /* General Slide Titles */
+        /* General Slide Styles */
         .slide-title {
              font-size: clamp(2rem, 5vw, 3.5rem);
              color: var(--accent-green);
              margin-bottom: 1rem;
         }
         .slide-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
             color: var(--text-secondary); 
             font-weight: 400;
-            margin-bottom: 3rem;
+            max-width: 800px;
         }
 
-
-        /* Slide 1 Specifics */
-        #slide1 h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        #slide1 h2 {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            color: var(--text-secondary);
-            font-weight: 400;
-            margin-bottom: 2rem;
-        }
-        #slide1 p {
-            font-size: 1.2rem;
-            color: var(--accent-green);
-        }
+        /* Slide 1: Title */
+        #slide1 h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; margin-bottom: 1rem; }
+        #slide1 h2 { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--text-secondary); font-weight: 400; margin-bottom: 2rem; }
+        #slide1 p { font-size: 1.2rem; color: var(--accent-green); }
         
-        /* Slide 2 Specifics */
-        #slide2 p {
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            max-width: 700px;
-            color: var(--text-secondary);
-        }
-        .counter-container {
-            margin-top: 2rem;
-        }
-        .loss-label {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-        .loss-counter {
-            font-size: clamp(5rem, 15vw, 9rem);
-            color: var(--accent-red);
-            font-weight: 700;
-        }
+        /* Slide 2: The Real Challenge */
+        .loss-counter { font-size: clamp(5rem, 15vw, 9rem); color: var(--accent-red); font-weight: 700; margin-top: 2rem; }
 
-        /* Slide 3 Specifics - Interactive Cards */
+        /* Slide 3: Meet Your New Assistant */
         #slide3 .demo-link {
             font-size: clamp(1.5rem, 4vw, 2.5rem);
             color: var(--text-light);
@@ -183,173 +121,92 @@
             align-items: center;
             gap: 1rem;
         }
-        #slide3 .demo-link:hover {
-            color: var(--accent-green);
-        }
-        #slide3 .demo-link svg {
-            width: clamp(1.5rem, 4vw, 2.5rem);
-            height: clamp(1.5rem, 4vw, 2.5rem);
-            fill: currentColor;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 800px;
-        }
+        #slide3 .demo-link:hover { color: var(--accent-green); }
+        #slide3 .demo-link svg { width: clamp(1.5rem, 4vw, 2.5rem); height: clamp(1.5rem, 4vw, 2.5rem); fill: currentColor; }
+        .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 700px; width:100%; }
         .feature-card {
             background-color: var(--card-bg);
             border-radius: 15px;
-            padding: 2rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             border: 1px solid #333;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 20px rgba(0, 255, 133, 0.5);
-        }
-        .feature-card svg {
-            width: 50px;
-            height: 50px;
-            fill: var(--accent-green);
-            margin-bottom: 1rem;
-        }
-        .feature-card h4 {
-            font-size: 1.2rem;
-            color: var(--text-light);
-        }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 0 20px rgba(0, 255, 133, 0.5); }
+        .feature-card svg { width: 40px; height: 40px; fill: var(--accent-green); margin-bottom: 1rem; }
+        .feature-card h4 { font-size: 1.1rem; color: var(--text-light); font-weight: 600; }
 
-        /* Slide 4 Specifics - Vertical Stepper */
-        .stepper-wrapper {
-            position: relative;
-            padding-left: 60px; /* Space for the line and nodes */
-            max-width: 700px;
+        /* Slide 4: From Action to Impact (NEW) */
+        .impact-flow-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+            gap: 2rem;
         }
-        .stepper-line {
-            position: absolute;
-            left: 24px; /* Center of the node */
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: var(--text-secondary);
-            transform: scaleY(0);
-            transform-origin: top;
-            transition: transform 1.2s ease-out;
-        }
-        .active .stepper-line {
-            transform: scaleY(1);
-        }
-        .stepper-item {
-            position: relative;
-            margin-bottom: 3rem;
-            text-align: left;
-        }
-        .stepper-item:last-child {
-            margin-bottom: 0;
-        }
-        .stepper-node {
-            position: absolute;
-            left: -37px;
-            top: 0;
-            width: 50px;
-            height: 50px;
-            border: 2px solid var(--accent-green);
+        .flow-column { flex: 1; display: flex; flex-direction: column; gap: 2rem; }
+        .flow-column.inputs { align-items: flex-end; text-align: right; }
+        .flow-column.outputs { align-items: flex-start; text-align: left; }
+        .flow-item { background: var(--card-bg); padding: 1rem; border-radius: 10px; border: 1px solid #333; }
+        .flow-item h4 { font-size: 1.1rem; }
+        .ai-engine {
+            flex-shrink: 0;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            background-color: var(--bg-black);
+            background: var(--accent-green);
             display: flex;
             justify-content: center;
             align-items: center;
+            text-align: center;
             font-weight: 700;
+            color: var(--bg-black);
+            padding: 1rem;
             font-size: 1.2rem;
-            color: var(--accent-green);
+            box-shadow: 0 0 30px rgba(0, 255, 133, 0.6);
             transform: scale(0);
-            transition: transform 0.5s ease-out;
+            transition: transform 0.6s ease-out;
         }
-        .active .stepper-item .stepper-node {
-            transform: scale(1);
-        }
-        .stepper-content {
-            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-            padding-top: 10px;
-        }
-
-        /* Slide 5 Specifics */
-        #slide5 .impact-text {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            color: var(--text-secondary);
-            max-width: 700px;
-        }
-        #slide5 .impact-text .highlight {
-            color: var(--accent-green);
-            font-weight: 600;
+        .active .ai-engine { transform: scale(1); transition-delay: 0.4s; }
+        .active .ai-engine.activated { animation: engine-pulse 1.5s ease-in-out; }
+        @keyframes engine-pulse {
+            0% { box-shadow: 0 0 30px rgba(0, 255, 133, 0.6); }
+            50% { box-shadow: 0 0 50px rgba(0, 255, 133, 1); }
+            100% { box-shadow: 0 0 30px rgba(0, 255, 133, 0.6); }
         }
 
-        /* Slide 6 Specifics */
-        #slide6 .reality-grid {
-            display: flex;
-            gap: 3rem;
-            align-items: center;
-            justify-content: center;
-        }
-        #slide6 .reality-card {
-            background-color: var(--card-bg);
-            border: 1px solid #333;
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 350px;
-        }
-        #slide6 .reality-card h4 {
-            font-size: 1.5rem;
-            color: var(--accent-green);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Slide 7 Specifics */
-        #slide7 h1 {
-            font-size: clamp(2.5rem, 7vw, 5rem);
+        /* Slide 5: Call to Action */
+        #slide5 .vote-button {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            color: var(--bg-black);
+            background: var(--accent-green);
+            padding: 2rem 4rem;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(0, 255, 133, 0.6);
             animation: pulse 2.5s infinite;
         }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
+        #slide5 .vote-button:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(0, 255, 133, 0.8); }
+        #slide5 .slide-subtitle { color: var(--text-secondary); margin-top: 2rem; }
+        #slide5 .tool-name { color: var(--accent-green); font-weight: 600; font-size: 1.5rem; margin-top: 1rem; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
         /* Animation for slide content */
-        .animated-item {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .active .animated-item {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .animated-item { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .active .animated-item { opacity: 1; transform: translateY(0); }
         .active .animated-item:nth-child(2) { transition-delay: 0.2s; }
         .active .animated-item:nth-child(3) { transition-delay: 0.4s; }
         .active .animated-item:nth-child(4) { transition-delay: 0.6s; }
         .active .animated-item:nth-child(5) { transition-delay: 0.8s; }
-        .active .animated-item:nth-child(6) { transition-delay: 1.0s; }
-        
-        /* Staggered animation for stepper */
-        .active .stepper-item:nth-of-type(1) .stepper-node { transition-delay: 0.2s; }
-        .active .stepper-item:nth-of-type(1) .stepper-content { transition-delay: 0.4s; }
-        .active .stepper-item:nth-of-type(2) .stepper-node { transition-delay: 0.6s; }
-        .active .stepper-item:nth-of-type(2) .stepper-content { transition-delay: 0.8s; }
-        .active .stepper-item:nth-of-type(3) .stepper-node { transition-delay: 1.0s; }
-        .active .stepper-item:nth-of-type(3) .stepper-content { transition-delay: 1.2s; }
-        .active .stepper-item:nth-of-type(4) .stepper-node { transition-delay: 1.4s; }
-        .active .stepper-item:nth-of-type(4) .stepper-content { transition-delay: 1.6s; }
-
     </style>
 </head>
 <body>
 
     <div class="logo">st<span>a</span>rt.io</div>
 
-    <!-- Slides Container -->
     <main id="presentation-container">
 
         <!-- SLIDE 1 -->
@@ -361,91 +218,60 @@
 
         <!-- SLIDE 2 -->
         <section class="slide" id="slide2">
-            <h3 class="slide-subtitle animated-item">The Problem — Lost Revenue</h3>
-            <h1 class="slide-title animated-item">Are We Losing Revenue?</h1>
-            <p class="animated-item">Manual checks, hidden discrepancies, and slow detection lead to 15–25% lost profit every month.</p>
-            <div class="counter-container animated-item">
-                <div class="loss-label">POTENTIAL HIDDEN LOSS</div>
-                <div class="loss-counter" id="loss-counter">0-10%</div>
-            </div>
+            <h1 class="slide-title animated-item">The Real Challenge</h1>
+            <p class="slide-subtitle animated-item">Account managers today spend hours tracking revenue, hunting for issues, and juggling reports—while clients expect instant answers and fast solutions.</p>
+            <p class="slide-subtitle animated-item">As a result, up to <span id="loss-counter" class="loss-counter">25%</span> of profit is lost every month due to hidden gaps and slow responses.</p>
         </section>
         
         <!-- SLIDE 3 -->
         <section class="slide" id="slide3">
-            <h3 class="slide-subtitle animated-item">Meet the Tool</h3>
             <a href="https://ai-revenue-dashboard-dueiguwapplgdfbruh7t4sw.streamlit.app/" target="_blank" class="demo-link animated-item">
-                Meet the AI Revenue Optimizer
+                Meet your new AI-powered assistant
                 <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
             </a>
             <div class="features-grid">
                 <div class="feature-card animated-item" style="transition-delay: 0.4s;">
                     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-                    <h4>AI-driven insights & alerts</h4>
+                    <h4>Automatic Urgent Issue Alerts</h4>
                 </div>
                 <div class="feature-card animated-item" style="transition-delay: 0.6s;">
-                    <svg viewBox="0 0 24 24"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm-7 4c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7zm7-5c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/></svg>
-                    <h4>Real-time revenue monitoring</h4>
+                    <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM17 11H7V9h10v2zm-4 4H7v-2h6v2z"/></svg>
+                    <h4>Real-time Discrepancy Flags</h4>
                 </div>
                 <div class="feature-card animated-item" style="transition-delay: 0.8s;">
                     <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    <h4>Actionable recommendations</h4>
+                    <h4>Instant Actionable Insights</h4>
                 </div>
                 <div class="feature-card animated-item" style="transition-delay: 1.0s;">
                     <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
-                    <h4>One-click fixes</h4>
+                    <h4>Automate Manual Work</h4>
                 </div>
             </div>
         </section>
 
         <!-- SLIDE 4 -->
         <section class="slide" id="slide4">
-            <h1 class="slide-title animated-item">How It Works</h1>
-            <div class="stepper-wrapper animated-item">
-                <div class="stepper-line"></div>
-                <div class="stepper-item">
-                    <div class="stepper-node">1</div>
-                    <div class="stepper-content animated-item">Connects to your data sources</div>
+            <h1 class="slide-title animated-item">From Action to Impact</h1>
+            <div class="impact-flow-wrapper">
+                <div class="flow-column inputs">
+                    <div class="flow-item animated-item" style="transition-delay: 0.8s;"><h4>24/7 Monitoring</h4></div>
+                    <div class="flow-item animated-item" style="transition-delay: 1.0s;"><h4>Instant Alerts</h4></div>
+                    <div class="flow-item animated-item" style="transition-delay: 1.2s;"><h4>Smart Recommendations</h4></div>
                 </div>
-                <div class="stepper-item">
-                    <div class="stepper-node">2</div>
-                    <div class="stepper-content animated-item">Uses AI to surface key issues and opportunities</div>
-                </div>
-                <div class="stepper-item">
-                    <div class="stepper-node">3</div>
-                    <div class="stepper-content animated-item">Sends alerts and actionable steps</div>
-                </div>
-                <div class="stepper-item">
-                    <div class="stepper-node">4</div>
-                    <div class="stepper-content animated-item">Lets you fix or download reports with one click</div>
+                <div class="ai-engine animated-item">AI Revenue Optimizer</div>
+                <div class="flow-column outputs">
+                    <div class="flow-item animated-item" style="transition-delay: 1.6s;"><h4>Grow Revenue</h4></div>
+                    <div class="flow-item animated-item" style="transition-delay: 1.8s;"><h4>Save Hours</h4></div>
+                    <div class="flow-item animated-item" style="transition-delay: 2.0s;"><h4>Protect Trust</h4></div>
                 </div>
             </div>
         </section>
 
         <!-- SLIDE 5 -->
         <section class="slide" id="slide5">
-            <h1 class="slide-title animated-item">What’s the Impact?</h1>
-            <p class="impact-text animated-item">Just by reducing inefficiencies, we can increase profit by <span class="highlight" id="impact-counter">15–25%</span>.</p>
-        </section>
-
-        <!-- SLIDE 6 -->
-        <section class="slide" id="slide6">
-             <h1 class="slide-title animated-item">From Demo to Reality</h1>
-             <div class="reality-grid">
-                 <div class="reality-card animated-item" style="transition-delay: 0.4s;">
-                     <h4>This is a working demo.</h4>
-                     <p>Ready to explore and validate the core functionality today.</p>
-                 </div>
-                 <div class="reality-card animated-item" style="transition-delay: 0.6s;">
-                     <h4>1 month of engineering...</h4>
-                     <p>...is all it takes to launch this tool company-wide.</p>
-                 </div>
-             </div>
-        </section>
-
-        <!-- SLIDE 7 -->
-        <section class="slide" id="slide7">
-            <h1 class="slide-title animated-item">Vote for AI Revenue Optimizer</h1>
-            <h2 class="slide-subtitle animated-item">Let’s build it together and boost our revenue!</h2>
+            <a href="#" class="vote-button animated-item">VOTE</a>
+            <h2 class="slide-subtitle animated-item" style="transition-delay: 0.2s;">For Next-Level Account Management</h2>
+            <h3 class="tool-name animated-item" style="transition-delay: 0.4s;">AI Revenue Optimizer</h3>
         </section>
 
     </main>
@@ -466,17 +292,8 @@
             let currentSlide = 0;
 
             function updateArrows() {
-                if (currentSlide > 0) {
-                    prevArrow.style.display = 'flex';
-                } else {
-                    prevArrow.style.display = 'none';
-                }
-
-                if (currentSlide < slides.length - 1) {
-                    nextArrow.style.display = 'flex';
-                } else {
-                    nextArrow.style.display = 'none';
-                }
+                prevArrow.style.display = currentSlide > 0 ? 'flex' : 'none';
+                nextArrow.style.display = currentSlide < slides.length - 1 ? 'flex' : 'none';
             }
             
             function animateCounter(el, start, end, duration) {
@@ -485,18 +302,18 @@
                     if (!startTimestamp) startTimestamp = timestamp;
                     const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                     const currentNumber = Math.floor(progress * (end - start) + start);
-                    el.innerHTML = `${currentNumber}-${currentNumber + 10}%`;
+                    el.textContent = `${currentNumber}%`;
                     if (progress < 1) {
                         window.requestAnimationFrame(step);
+                    } else {
+                        el.textContent = `${end}%`;
                     }
                 };
                 window.requestAnimationFrame(step);
             }
 
             function goToSlide(slideIndex) {
-                if (slideIndex < 0 || slideIndex >= slides.length) {
-                    return;
-                }
+                if (slideIndex < 0 || slideIndex >= slides.length) return;
                 
                 const current = slides[currentSlide];
                 const next = slides[slideIndex];
@@ -521,40 +338,31 @@
                 currentSlide = slideIndex;
                 updateArrows();
 
-                // Trigger animations on specific slides
                 if (next.id === 'slide2' && !next.dataset.animated) {
                     const counterEl = document.getElementById('loss-counter');
-                    animateCounter(counterEl, 0, 15, 1200);
+                    animateCounter(counterEl, 0, 25, 1500);
                     next.dataset.animated = 'true';
                 }
-                if (next.id === 'slide5' && !next.dataset.animated) {
-                    const counterEl = document.getElementById('impact-counter');
-                    animateCounter(counterEl, 0, 15, 1200);
+                
+                if (next.id === 'slide4' && !next.dataset.animated) {
+                    const engine = next.querySelector('.ai-engine');
+                    setTimeout(() => {
+                       engine.classList.add('activated');
+                    }, 1500); // Activate after main animations
                     next.dataset.animated = 'true';
                 }
             }
 
-            nextArrow.addEventListener('click', () => {
-                goToSlide(currentSlide + 1);
-            });
+            nextArrow.addEventListener('click', () => goToSlide(currentSlide + 1));
+            prevArrow.addEventListener('click', () => goToSlide(currentSlide - 1));
 
-            prevArrow.addEventListener('click', () => {
-                goToSlide(currentSlide - 1);
-            });
-
-            // Key navigation
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') {
-                    goToSlide(currentSlide + 1);
-                } else if (e.key === 'ArrowLeft') {
-                    goToSlide(currentSlide - 1);
-                }
+                if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+                else if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
             });
 
-            // Initialize
             updateArrows();
         });
     </script>
 </body>
 </html>
-
