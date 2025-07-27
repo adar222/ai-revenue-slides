@@ -103,7 +103,17 @@
         }
 
         /* Slide 1: Title */
-        #slide1 h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; margin-bottom: 1rem; }
+        #slide1 h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent-green); /* Fallback */
+            background: linear-gradient(90deg, var(--accent-green), var(--text-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: title-glow 4s infinite ease-in-out;
+        }
         #slide1 h2 { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--text-secondary); font-weight: 400; margin-bottom: 2rem; }
         #slide1 p { font-size: 1.2rem; color: var(--accent-green); }
         
@@ -228,6 +238,7 @@
         #slide5 .vote-button:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(0, 255, 133, 0.8); }
         #slide5 .slide-subtitle { color: var(--text-secondary); margin-top: 2rem; }
         #slide5 .tool-name { color: var(--accent-green); font-weight: 600; font-size: 1.5rem; margin-top: 1rem; }
+        
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
         /* Animation for slide content */
@@ -237,6 +248,13 @@
         .active .animated-item:nth-child(3) { transition-delay: 0.4s; }
         .active .animated-item:nth-child(4) { transition-delay: 0.6s; }
         .active .animated-item:nth-child(5) { transition-delay: 0.8s; }
+
+        @keyframes title-glow {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 133, 0.4), 0 0 20px rgba(0, 255, 133, 0.4); }
+            50% { text-shadow: 0 0 20px rgba(0, 255, 133, 0.8), 0 0 40px rgba(0, 255, 133, 0.8); }
+            100% { text-shadow: 0 0 10px rgba(0, 255, 133, 0.4), 0 0 20px rgba(0, 255, 133, 0.4); }
+        }
+
     </style>
 </head>
 <body>
