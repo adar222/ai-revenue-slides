@@ -25,20 +25,6 @@
             overflow: hidden;
             height: 100vh;
         }
-        /* Glowing pulse background for wow effect */
-        body::before {
-            content: "";
-            position: fixed;
-            left: 0; top: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle at 50% 30%, #00FF8570 0%, transparent 60%);
-            animation: bgPulse 5s infinite alternate;
-            z-index: 0;
-            pointer-events: none;
-        }
-        @keyframes bgPulse {
-            0% { opacity: 0.15; }
-            100% { opacity: 0.3; }
-        }
 
         /* Slide Structure */
         .slide {
@@ -55,7 +41,7 @@
             left: 0;
             transform: translateX(100%);
             opacity: 0;
-            transition: transform 0.7s cubic-bezier(.55,.06,.68,.19), opacity 0.7s cubic-bezier(.55,.06,.68,.19);
+            transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
         }
         .slide.active { transform: translateX(0); opacity: 1; z-index: 1; }
         .slide.exit { transform: translateX(-100%); opacity: 0; }
@@ -87,7 +73,6 @@
             z-index: 10;
             transition: all 0.3s ease;
             animation: bounce 2s infinite ease-in-out;
-            background: rgba(0,0,0,0.2);
         }
         .nav-arrow:hover {
             background-color: rgba(0, 255, 133, 0.1);
@@ -104,6 +89,7 @@
             60% { transform: translateY(-5px); }
         }
 
+        /* General Slide Styles */
         .slide-title {
              font-size: clamp(2rem, 5vw, 3.5rem);
              color: var(--accent-green);
@@ -115,21 +101,12 @@
             font-weight: 400;
             max-width: 800px;
         }
-        /* Title Slide Animation */
-        .tagline {
-            font-size: 2rem;
-            color: var(--accent-green);
-            font-weight: 600;
-            margin-top: 1.3rem;
-            letter-spacing: 2px;
-            opacity: 0;
-            animation: fadeinTagline 2s forwards;
-            animation-delay: 0.8s;
-        }
-        @keyframes fadeinTagline {
-            0% { opacity: 0; transform: translateY(18px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+
+        /* Slide 1: Title */
+        #slide1 h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; margin-bottom: 1rem; }
+        #slide1 h2 { font-size: clamp(1.2rem, 3vw, 2rem); color: var(--text-secondary); font-weight: 400; margin-bottom: 2rem; }
+        #slide1 p { font-size: 1.2rem; color: var(--accent-green); }
+        
         /* Slide 2: The Real Challenge (Redesigned) */
         #slide2 .challenge-wrapper {
             display: flex;
@@ -168,8 +145,7 @@
             margin-bottom: 1rem;
         }
         .loss-counter { font-size: clamp(5rem, 15vw, 9rem); color: var(--accent-red); font-weight: 700; }
-        /* Flow Diagram Visual */
-        .challenge-flow-svg { margin: 2rem auto 0 auto; display: block; }
+
         /* Slide 3: Meet Your New Assistant */
         #slide3 .demo-link {
             font-size: clamp(1.5rem, 4vw, 2.5rem);
@@ -180,7 +156,6 @@
             display: inline-flex;
             align-items: center;
             gap: 1rem;
-            font-weight: 600;
         }
         #slide3 .demo-link:hover { color: var(--accent-green); }
         #slide3 .demo-link svg { width: clamp(1.5rem, 4vw, 2.5rem); height: clamp(1.5rem, 4vw, 2.5rem); fill: currentColor; }
@@ -192,18 +167,11 @@
             text-align: center;
             border: 1px solid #333;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0;
-            transform: scale(0.95);
-            animation: fadeinFeature 1s forwards;
         }
-        .feature-card.visible { opacity: 1; transform: scale(1); }
         .feature-card:hover { transform: translateY(-10px); box-shadow: 0 0 20px rgba(0, 255, 133, 0.5); }
         .feature-card svg { width: 40px; height: 40px; fill: var(--accent-green); margin-bottom: 1rem; }
         .feature-card h4 { font-size: 1.1rem; color: var(--text-light); font-weight: 600; }
-        @keyframes fadeinFeature {
-            0% { opacity: 0; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
-        }
+
         /* Slide 4: From Action to Impact */
         .impact-flow-wrapper {
             display: flex;
@@ -236,19 +204,14 @@
             transform: scale(0);
             transition: transform 0.6s ease-out;
         }
-        .active .ai-engine { transform: scale(1); transition-delay: 0.4s; animation: engine-pulse 1.5s ease-in-out 0.8s 1;}
+        .active .ai-engine { transform: scale(1); transition-delay: 0.4s; }
+        .active .ai-engine.activated { animation: engine-pulse 1.5s ease-in-out; }
         @keyframes engine-pulse {
             0% { box-shadow: 0 0 30px rgba(0, 255, 133, 0.6); }
             50% { box-shadow: 0 0 50px rgba(0, 255, 133, 1); }
             100% { box-shadow: 0 0 30px rgba(0, 255, 133, 0.6); }
         }
-        /* Arrows for flow (optional) */
-        .flow-arrow {
-            width: 60px; height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+
         /* Slide 5: Call to Action */
         #slide5 .vote-button {
             font-size: clamp(2.5rem, 8vw, 5rem);
@@ -266,6 +229,7 @@
         #slide5 .slide-subtitle { color: var(--text-secondary); margin-top: 2rem; }
         #slide5 .tool-name { color: var(--accent-green); font-weight: 600; font-size: 1.5rem; margin-top: 1rem; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
         /* Animation for slide content */
         .animated-item { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .active .animated-item { opacity: 1; transform: translateY(0); }
@@ -280,11 +244,12 @@
     <div class="logo">st<span>a</span>rt.io</div>
 
     <main id="presentation-container">
+
         <!-- SLIDE 1 -->
         <section class="slide active" id="slide1">
             <h1 class="animated-item">AI Revenue Optimizer</h1>
-            <div class="tagline">Unlock Hidden Revenue<br>Work Smarter.</div>
-            <p class="animated-item" style="margin-top:2.2rem;">By: Adar, Freek, Milosz</p>
+            <h2 class="animated-item">Unlock Hidden Revenue. Work Smarter.</h2>
+            <p class="animated-item">By: Adar, Freek, Milosz</p>
         </section>
 
         <!-- SLIDE 2 -->
@@ -309,4 +274,150 @@
                     <p class="slide-subtitle animated-item" style="transition-delay: 1s;">Resulting in up to</p>
                     <div id="loss-counter" class="loss-counter animated-item" style="transition-delay: 1s;">25%</div>
                     <p class="slide-subtitle animated-item" style="transition-delay: 1s;">of profit lost every month.</p>
-                    <!-- Infographic flow visual -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- SLIDE 3 -->
+        <section class="slide" id="slide3">
+            <a href="https://ai-revenue-dashboard-dueiguwapplgdfbruh7t4sw.streamlit.app/" target="_blank" class="demo-link animated-item">
+                Meet your new AI-powered assistant
+                <svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+            </a>
+            <div class="features-grid">
+                <div class="feature-card animated-item" style="transition-delay: 0.4s;">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+                    <h4>Automatic Urgent Issue Alerts</h4>
+                </div>
+                <div class="feature-card animated-item" style="transition-delay: 0.6s;">
+                    <svg viewBox="0 0 24 24"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM17 11H7V9h10v2zm-4 4H7v-2h6v2z"/></svg>
+                    <h4>Real-time Discrepancy Flags</h4>
+                </div>
+                <div class="feature-card animated-item" style="transition-delay: 0.8s;">
+                    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <h4>Instant Actionable Insights</h4>
+                </div>
+                <div class="feature-card animated-item" style="transition-delay: 1.0s;">
+                    <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+                    <h4>Automate Manual Work</h4>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4 -->
+        <section class="slide" id="slide4">
+            <h1 class="slide-title animated-item">From Action to Impact</h1>
+            <div class="impact-flow-wrapper">
+                <div class="flow-column inputs">
+                    <div class="flow-item animated-item" style="transition-delay: 0.8s;"><h4>24/7 Monitoring</h4></div>
+                    <div class="flow-item animated-item" style="transition-delay: 1.0s;"><h4>Instant Alerts</h4></div>
+                    <div class="flow-item animated-item" style="transition-delay: 1.2s;"><h4>Smart Recommendations</h4></div>
+                </div>
+                <div class="ai-engine animated-item">AI Revenue Optimizer</div>
+                <div class="flow-column outputs">
+                    <div class="flow-item animated-item" style="transition-delay: 1.6s;"><h4>Grow Revenue</h4></div>
+                    <div class="flow-item animated-item" style="transition-delay: 1.8s;"><h4>Save Hours</h4></div>
+                    <div class="flow-item animated-item" style="transition-delay: 2.0s;"><h4>Protect Trust</h4></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5 -->
+        <section class="slide" id="slide5">
+            <a href="#" class="vote-button animated-item">VOTE</a>
+            <h2 class="slide-subtitle animated-item" style="transition-delay: 0.2s;">For Next-Level Account Management</h2>
+            <h3 class="tool-name animated-item" style="transition-delay: 0.4s;">AI Revenue Optimizer</h3>
+        </section>
+
+    </main>
+
+    <!-- Navigation -->
+    <div class="nav-arrow prev" id="prev-arrow">
+        <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    </div>
+    <div class="nav-arrow next" id="next-arrow">
+        <svg viewBox="0 0 24 24"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const nextArrow = document.getElementById('next-arrow');
+            const prevArrow = document.getElementById('prev-arrow');
+            let currentSlide = 0;
+
+            function updateArrows() {
+                prevArrow.style.display = currentSlide > 0 ? 'flex' : 'none';
+                nextArrow.style.display = currentSlide < slides.length - 1 ? 'flex' : 'none';
+            }
+            
+            function animateCounter(el, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    const currentNumber = Math.floor(progress * (end - start) + start);
+                    el.textContent = `${currentNumber}%`;
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        el.textContent = `${end}%`;
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            function goToSlide(slideIndex) {
+                if (slideIndex < 0 || slideIndex >= slides.length) return;
+                
+                const current = slides[currentSlide];
+                const next = slides[slideIndex];
+
+                if (slideIndex > currentSlide) {
+                    current.classList.add('exit');
+                    current.classList.remove('active');
+                    next.classList.remove('exit');
+                    next.classList.add('active');
+                } else {
+                    current.classList.remove('active');
+                    current.classList.remove('exit'); 
+                    next.classList.remove('exit');
+                    next.style.transform = 'translateX(-100%)';
+                    
+                    setTimeout(() => {
+                        next.classList.add('active');
+                        next.style.transform = 'translateX(0)';
+                    }, 50);
+                }
+                
+                currentSlide = slideIndex;
+                updateArrows();
+
+                if (next.id === 'slide2' && !next.dataset.animated) {
+                    const counterEl = document.getElementById('loss-counter');
+                    animateCounter(counterEl, 0, 25, 1500);
+                    next.dataset.animated = 'true';
+                }
+                
+                if (next.id === 'slide4' && !next.dataset.animated) {
+                    const engine = next.querySelector('.ai-engine');
+                    setTimeout(() => {
+                       engine.classList.add('activated');
+                    }, 1500); // Activate after main animations
+                    next.dataset.animated = 'true';
+                }
+            }
+
+            nextArrow.addEventListener('click', () => goToSlide(currentSlide + 1));
+            prevArrow.addEventListener('click', () => goToSlide(currentSlide - 1));
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') goToSlide(currentSlide + 1);
+                else if (e.key === 'ArrowLeft') goToSlide(currentSlide - 1);
+            });
+
+            updateArrows();
+        });
+    </script>
+</body>
+</html>
